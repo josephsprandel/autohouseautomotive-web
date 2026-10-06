@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoHouse Automotive – Auto Repair | Wood Dale, IL</title>
+<meta name="description" content="Full-service auto repair in Wood Dale, IL. Ford, Chevrolet, BMW, Toyota, Honda and all makes. ASE-certified technicians, 12-month warranty. Near I-290 and O'Hare.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "AutoHouse Automotive of Chicagoland",
+  "alternateName": "AutoHouse Chicago",
+  "description": "Full-service auto repair shop in Wood Dale, IL serving the western Chicago suburbs. Specializing in domestic trucks and European imports including BMW and Volvo. ASE-certified technicians, 12-month warranty on all parts and repairs.",
+  "url": "https://autohouseautomotive.com",
+  "telephone": "+16307086586",
+  "email": "service@autohouseautomotive.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "359 E Potter St",
+    "addressLocality": "Wood Dale",
+    "addressRegion": "IL",
+    "postalCode": "60191",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.9631,
+    "longitude": -87.9789
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "description": "By appointment"
+    }
+  ],
+  "areaServed": [
+    {"@type": "City", "name": "Wood Dale"},
+    {"@type": "City", "name": "Itasca"},
+    {"@type": "City", "name": "Bensenville"},
+    {"@type": "City", "name": "Addison"},
+    {"@type": "City", "name": "Elmhurst"},
+    {"@type": "City", "name": "Elk Grove Village"},
+    {"@type": "City", "name": "Villa Park"},
+    {"@type": "City", "name": "Lombard"},
+    {"@type": "City", "name": "Schaumburg"},
+    {"@type": "City", "name": "Des Plaines"},
+    {"@type": "City", "name": "Franklin Park"},
+    {"@type": "AdministrativeArea", "name": "DuPage County"}
+  ],
+  "knowsAbout": [
+    "Ford truck repair","Ford F-150 repair","Ford F-250 repair",
+    "Chevrolet repair","GMC repair","Jeep repair",
+    "BMW repair","BMW diagnostics","BMW 3 Series","BMW 5 Series","BMW X3","BMW X5","BMW M Series",
+    "Volvo repair","Volvo XC90","Volvo XC60","Mercedes-Benz repair","Audi repair",
+    "Toyota repair","Honda repair","Hyundai repair",
+    "European auto repair","domestic auto repair","automotive diagnostics",
+    "A/C repair","timing belt replacement","transmission repair","brake repair","electrical diagnostics"
+  ],
+  "numberOfEmployees": {"@type": "QuantitativeValue", "value": "10"},
+  "memberOf": {"@type": "Organization", "name": "Bosch Car Service Network"},
+  "slogan": "Every make, every model. Wood Dale's full-service shop.",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "AutoHouse Automotive",
+    "url": "https://autohousenwa.com"
+  },
+  "paymentAccepted": "Visa, Mastercard, Discover, American Express"
+}
+</script>
+
+<style>
+  :root {
+    --black:   #0d0d0d;
+    --steel:   #1c2b3a;
+    --mid:     #2e4057;
+    --rule:    #2a3f52;
+    --silver:  #8fa8bc;
+    --ice:     #c8d8e4;
+    --white:   #f2f5f7;
+    --accent:  #c8a84b;
+    --radius:  4px;
+    --font-display: 'Georgia', 'Times New Roman', serif;
+    --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--steel);
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem; gap: 1rem;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.05rem; letter-spacing: 0.04em;
+    color: var(--white); text-decoration: none; line-height: 1.2;
+  }
+  .logo span {
+    display: block; font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--silver); font-family: var(--font-body);
+  }
+  .header-cta { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+  /* Buttons */
+  .btn-call {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: var(--black);
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em;
+    padding: 0.55rem 1.1rem; border-radius: var(--radius);
+    text-decoration: none; white-space: nowrap;
+    transition: filter 0.15s;
+  }
+  .btn-call:hover { filter: brightness(1.1); }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--white);
+    font-size: 0.9rem; padding: 0.55rem 1.1rem;
+    border-radius: var(--radius); border: 1px solid var(--rule);
+    text-decoration: none; white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--silver); color: var(--ice); }
+
+  /* Hero */
+  #hero {
+    background: var(--steel);
+    border-bottom: 1px solid var(--rule);
+    padding: 3rem 1.25rem 3.5rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg, transparent, transparent 59px,
+      rgba(200,168,75,0.07) 59px, rgba(200,168,75,0.07) 60px
+    );
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+  }
+  #hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 6vw, 3rem);
+    font-weight: normal; line-height: 1.15;
+    color: var(--white); margin-bottom: 0.75rem; position: relative;
+  }
+  #hero h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    color: var(--silver); font-size: 1rem;
+    max-width: 500px; margin: 0 auto 2rem; position: relative;
+  }
+  .hero-actions {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.75rem; position: relative;
+  }
+  .hero-actions .btn-call {
+    font-size: 1.1rem; padding: 0.85rem 2rem;
+    width: 100%; max-width: 320px; justify-content: center;
+  }
+  .hero-actions .btn-secondary {
+    width: 100%; max-width: 320px; justify-content: center;
+  }
+  .hero-trust {
+    margin-top: 2rem;
+    display: flex; justify-content: center;
+    gap: 1.5rem; flex-wrap: wrap; position: relative;
+  }
+  .trust-pill {
+    font-size: 0.75rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--silver);
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .trust-pill::before {
+    content: ''; display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--accent); border-radius: 50%;
+  }
+
+  /* Sections */
+  section { padding: 3rem 1.25rem; border-bottom: 1px solid var(--rule); }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: normal; color: var(--white);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  p { color: var(--silver); margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Stats bar */
+  #stats { background: var(--mid); }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden; margin-top: 1.5rem;
+  }
+  .stat-block {
+    background: var(--steel);
+    padding: 1.25rem 1rem; text-align: center;
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2rem; color: var(--accent);
+    line-height: 1; margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--silver);
+  }
+
+  /* Makes grid */
+  .makes-grid {
+    display: flex; flex-wrap: wrap;
+    gap: 0.5rem; margin-top: 1.5rem;
+  }
+  .make-tag {
+    font-size: 0.8rem; color: var(--ice);
+    background: var(--mid); border: 1px solid var(--rule);
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+    letter-spacing: 0.03em;
+  }
+  .make-tag.featured {
+    border-color: var(--accent); color: var(--accent);
+  }
+
+  /* Services list */
+  .services-list {
+    list-style: none; margin-top: 1.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1rem;
+  }
+  .services-list li {
+    font-size: 0.9rem; color: var(--ice);
+    display: flex; align-items: baseline; gap: 0.5rem;
+  }
+  .services-list li::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.45em;
+  }
+
+  /* Trust grid */
+  #trust { background: var(--steel); }
+  .trust-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.25rem; margin-top: 1.5rem;
+  }
+  .trust-block {
+    border-left: 2px solid var(--accent); padding-left: 0.85rem;
+  }
+  .trust-block strong {
+    display: block; font-size: 0.9rem;
+    color: var(--white); margin-bottom: 0.2rem;
+  }
+  .trust-block span { font-size: 0.8rem; color: var(--silver); }
+
+  /* Location */
+  #location { background: var(--mid); }
+  .location-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 1.5rem;
+  }
+  .hours-list { list-style: none; }
+  .hours-list li {
+    display: flex; justify-content: space-between;
+    font-size: 0.875rem; padding: 0.4rem 0;
+    border-bottom: 1px solid var(--rule); color: var(--ice);
+  }
+  .hours-list li:last-child { border-bottom: none; }
+  .hours-list .day { color: var(--silver); }
+  .address-block p { font-size: 0.9rem; line-height: 1.7; }
+  .address-block a { color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+  .address-block a:hover { text-decoration: underline; }
+
+  /* Bottom CTA */
+  #cta {
+    text-align: center; background: var(--steel);
+    padding: 3rem 1.25rem;
+  }
+  #cta h2 { margin-bottom: 0.5rem; }
+  #cta p { margin-bottom: 2rem; }
+  #cta .btn-call { font-size: 1.1rem; padding: 0.9rem 2.5rem; }
+  .cta-or {
+    margin: 1rem 0; font-size: 0.75rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--silver);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--black); padding: 1.5rem 1.25rem;
+    text-align: center; font-size: 0.75rem;
+    color: var(--silver); line-height: 1.8;
+  }
+  footer a { color: var(--silver); text-decoration: none; }
+  footer a:hover { color: var(--white); }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    header { padding: 0.75rem 2.5rem; }
+    #hero { padding: 4rem 2rem 5rem; }
+    section { padding: 3.5rem 2.5rem; }
+    #cta { padding: 4rem 2.5rem; }
+    .hero-actions { flex-direction: row; justify-content: center; }
+    .hero-actions .btn-call,
+    .hero-actions .btn-secondary { width: auto; }
+    .stats-row { grid-template-columns: repeat(4, 1fr); }
+    .trust-grid { grid-template-columns: repeat(4, 1fr); }
+    .location-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 400px) {
+    .services-list { grid-template-columns: 1fr; }
+    .location-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    AutoHouse Automotive
+    <span>Wood Dale, Illinois</span>
+  </a>
+  <div class="header-cta">
+    <a href="tel:+16307086586" class="btn-call">&#9742; Call Now</a>
+    <a href="schedule.php" class="btn-secondary">Schedule</a>
+  </div>
+</header>
+
+<section id="hero">
+  <p class="eyebrow">Wood Dale's Full-Service Shop</p>
+  <h1>Every Make.<br><em>Done Right.</em></h1>
+  <p class="hero-sub">From Ford trucks to BMW and Volvo &mdash; ASE-certified technicians, honest estimates, and a 12-month warranty on every repair. Minutes from I-290 and O'Hare.</p>
+  <div class="hero-actions">
+    <a href="tel:+16307086586" class="btn-call">&#9742; (630) 708-6586</a>
+    <a href="schedule.php" class="btn-secondary">Request Appointment</a>
+  </div>
+  <div class="hero-trust">
+    <span class="trust-pill">ASE Certified</span>
+    <span class="trust-pill">12-Month Warranty</span>
+    <span class="trust-pill">4.9 &#11088; on Google</span>
+    <span class="trust-pill">After-Hours Drop-Off</span>
+  </div>
+</section>
+
+<section id="stats">
+  <p class="section-label">By the Numbers</p>
+  <h2>A Busy Shop That's<br>Earned Its Reputation</h2>
+  <div class="stats-row">
+    <div class="stat-block">
+      <div class="stat-number">2,500+</div>
+      <div class="stat-label">Repairs in 2024</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">49</div>
+      <div class="stat-label">Makes Serviced</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">4.9 &#11088;</div>
+      <div class="stat-label">Google Rating</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">12mo</div>
+      <div class="stat-label">Parts &amp; Labor Warranty</div>
+    </div>
+  </div>
+</section>
+
+<section id="makes">
+  <p class="section-label">We Service</p>
+  <h2>Your Make Is<br>Already in Our Bays</h2>
+  <p>We work on everything &mdash; domestic trucks, Japanese imports, and European vehicles. BMW is a particular strength. Whatever you drive, we've seen it.</p>
+  <div class="makes-grid">
+    <span class="make-tag featured">Ford</span>
+    <span class="make-tag featured">Chevrolet</span>
+    <span class="make-tag featured">BMW</span>
+    <span class="make-tag featured">GMC</span>
+    <span class="make-tag">Toyota</span>
+    <span class="make-tag">Honda</span>
+    <span class="make-tag">Jeep</span>
+    <span class="make-tag">Hyundai</span>
+    <span class="make-tag">Mercedes-Benz</span>
+    <span class="make-tag">Volvo</span>
+    <span class="make-tag">Audi</span>
+    <span class="make-tag">Acura</span>
+    <span class="make-tag">Nissan</span>
+    <span class="make-tag">Dodge</span>
+    <span class="make-tag">Cadillac</span>
+    <span class="make-tag">Subaru</span>
+    <span class="make-tag">Mazda</span>
+    <span class="make-tag">Kia</span>
+    <span class="make-tag">Volkswagen</span>
+    <span class="make-tag">Lexus</span>
+    <span class="make-tag">Ram</span>
+    <span class="make-tag">Chrysler</span>
+    <span class="make-tag">Buick</span>
+    <span class="make-tag">Infiniti</span>
+    <span class="make-tag">Saab</span>
+    <span class="make-tag">+ more</span>
+  </div>
+</section>
+
+<section id="services">
+  <p class="section-label">Services</p>
+  <h2>Everything Your<br>Car Needs</h2>
+  <p>Diagnostics to drivetrain, routine maintenance to complex repairs &mdash; performed to manufacturer specifications every time.</p>
+  <ul class="services-list">
+    <li>Engine Diagnostics</li>
+    <li>Scheduled Maintenance</li>
+    <li>Brake Service &amp; Repair</li>
+    <li>Transmission Service</li>
+    <li>A/C Diagnostics &amp; Repair</li>
+    <li>Timing Belt Replacement</li>
+    <li>Electrical Diagnostics</li>
+    <li>Cooling System Repair</li>
+    <li>Oil &amp; Filter Service</li>
+    <li>Battery &amp; Charging Systems</li>
+    <li>Pre-Purchase Inspections</li>
+    <li>After-Hours Drop-Off</li>
+  </ul>
+</section>
+
+<section id="trust">
+  <p class="section-label">Why AutoHouse</p>
+  <h2>Straight Answers.<br>No Surprises.</h2>
+  <p>We tell you what your car needs and what it doesn't. Accurate diagnosis before any work begins &mdash; no guesswork, no upsells, no inflated estimates.</p>
+  <div class="trust-grid">
+    <div class="trust-block">
+      <strong>12-Month Warranty</strong>
+      <span>All parts and labor, every repair</span>
+    </div>
+    <div class="trust-block">
+      <strong>ASE Certified</strong>
+      <span>Trained technicians, not generalists</span>
+    </div>
+
+    <div class="trust-block">
+      <strong>4.9 Stars</strong>
+      <span>Rated by Wood Dale customers on Google</span>
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <p class="section-label">Find Us</p>
+  <h2>Wood Dale &mdash;<br>Minutes from I-290 &amp; O'Hare</h2>
+  <div class="location-grid">
+    <div>
+      <ul class="hours-list">
+        <li><span class="day">Monday &mdash; Friday</span><span>8:00 AM &mdash; 6:00 PM</span></li>
+        <li><span class="day">Saturday</span><span>By Appointment</span></li>
+        <li><span class="day">Sunday</span><span>Closed</span></li>
+        <li><span class="day">After-Hours Drop-Off</span><span>Available</span></li>
+      </ul>
+    </div>
+    <div class="address-block">
+      <p>359 E Potter St<br>Wood Dale, IL 60191</p>
+      <br>
+      <p>
+        <a href="tel:+16307086586">(630) 708-6586</a><br>
+        <a href="mailto:service@autohouseautomotive.com">service@autohouseautomotive.com</a>
+      </p>
+      <br>
+      <a href="https://maps.google.com/?q=359+E+Potter+St+Wood+Dale+IL+60191" target="_blank" rel="noopener">Open in Google Maps ?rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <p class="section-label">Ready to Book?</p>
+  <h2>Call the Shop.<br>We'll Take It From There.</h2>
+  <p>Same-week appointments available. After-hours drop-off if you can't make it during business hours.</p>
+  <a href="tel:+16307086586" class="btn-call">&#9742; (630) 708-6586</a>
+  <p class="cta-or">or</p>
+  <a href="schedule.php" class="btn-secondary">Request Appointment</a>
+</section>
+
+<footer>
+  <p>AutoHouse Automotive of Chicagoland &nbsp;&middot;&nbsp; 359 E Potter St, Wood Dale, IL 60191</p>
+  <p>(630) 708-6586 &nbsp;&middot;&nbsp; service@autohouseautomotive.com</p>
+  <p style="margin-top:0.75rem;">
+    Sister location: <a href="https://autohousenwa.com" target="_blank" rel="noopener">AutoHouse NWA &mdash; Fayetteville, AR</a>
+  </p>
+  <p style="margin-top:0.75rem; color:#4a6070;">&copy; 2026 AutoHouse Automotive. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

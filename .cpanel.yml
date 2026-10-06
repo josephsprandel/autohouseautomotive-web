@@ -12,9 +12,11 @@
 # m/ — docroot stub for m.autohouseautomotive.com (.htaccess only)
 # ro/ — legacy; holds old customer/invoice report history. Never commit it.
 # _img/, css/, graphics/ — 2017-2018 leftovers; nothing live references them
+# legacy/ — the previous homepage (until 2026-10-06), kept for reference; not deployed
 # config.php — host-only (appointment-request recipients). This repo is public:
 #   never commit it. Create it in File Manager from config.example.php.
 deployment:
   tasks:
     - export DEPLOYPATH=/home2/aachicago/public_html/
     - /bin/cp -f index.html schedule.php google1a4d95233974d369.html $DEPLOYPATH
+    - /bin/cp -Rf assets $DEPLOYPATH

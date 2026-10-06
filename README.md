@@ -2,6 +2,7 @@
 
 The AutoHouse Automotive of Chicagoland website (Wood Dale, IL; hosted on cPanel as account `aachicago`).
 
+- `index.html` is the homepage: a scroll-driven drive down the interstate into the Chicago skyline (canvas/WebGL, images in `assets/`), adapted from autohousenwa.com/concept. Its appointment buttons open a modal that posts to `schedule.php` with `ajax=1` (JSON reply); `/#book` opens the modal directly. The previous homepage is in `legacy/` (not deployed).
 - Standalone site: no shared includes and no RO Engine booking popup. The Request Appointment button goes to `schedule.php`, which emails the request through PHP `mail()` from `mail@autohouseautomotive.com` (Reply-To = the customer).
 - **Recipients live in `config.php` on the host only** (see `config.example.php`). This repo is public (cPanel clones over plain HTTPS), so never commit addresses, keys or passwords.
 - The shop runs Shop-Ware. Online requests go to `schedule.php`, never ROe `/book`, until the shop actually uses ROe.
