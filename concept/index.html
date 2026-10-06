@@ -165,6 +165,14 @@ html.bar-dark header{background:#1b1d20;border-bottom:3px solid #ff6600}
 html.bar-dark .wordmark,html.bar-dark .wordmark small,html.bar-dark .header-phone{color:#fff}
 html.bar-dark .header-hours{color:#cfd3d6}html.bar-dark .header-phone{border-bottom-color:#ffffff59}
 html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header-cta:hover{background:#ff7d26}
+/* Route list: translucent logo orange instead of navy. */
+@media(min-width:701px){.route-menu{background:#ff660052;border-color:#ffb27a59}}
+@media(max-width:700px){.route-menu nav{background:#ff660059}}
+.route-menu nav button{color:#fff8eee6}.route-menu nav button[aria-current=step]{color:#fff;font-weight:600}
+.route-menu nav button .dot{background:#ffffff40;border-color:#ffffffb3}.route-menu nav button[aria-current=step] .dot{background:#fff;border-color:#fff;box-shadow:0 0 0 5px #ffffff2e}
+.route-label{color:#fff8ee}
+/* Last sign: MUTCD blue like the first (motorist-services blue), not guide green. */
+.road-sign[data-index="4"] .sign-face{background-color:#1d4f91;box-shadow:0 0 0 5px #173f73,4px 7px 0 5px #0e2a4f,0 20px 35px #152c3133}
 </style>
 </head>
 <body>
@@ -524,7 +532,7 @@ const lighten=hex=>{const n=parseInt(hex.slice(1),16),f=c=>Math.min(255,Math.rou
 const wrapZ=v=>((v%640)+640)%640-40;
 function vehicle(v,z){
  if(z<2.5||z>600)return;
- const T=v.truck,w=T?2.5:1.8,L=T?16:4.6,hb=T?4:1,x1=v.x-w/2,x2=v.x+w/2,far=z+L;
+ const T=v.truck,w=T?2.5:1.8,L=T?11:3.8,hb=T?4:1,x1=v.x-w/2,x2=v.x+w/2,far=z+L;
  // Flat one-point perspective keeps the face square to the road parallel to the screen, so off-axis
  // vehicles looked turned toward the viewer. Each vehicle turns about its own centre by its viewing
  // angle (zero at the vanishing point, growing toward the edges): fronts foreshorten and bodies run
@@ -537,21 +545,21 @@ function vehicle(v,z){
  // Right side: every vehicle is left of the camera.
  polygon([P(x2,.32,z),P(x2,.32,far),P(x2,hb,far),P(x2,hb,z)],body[1]);
  const R=(u1,u2,y1,y2,col)=>polygon([P(u1,y1,z),P(u2,y1,z),P(u2,y2,z),P(u1,y2,z)],col);
- const wheels=()=>{for(const wz of T?[z+1.2,far-3.5,far-1.5]:[z+.9,far-.9]){const a=P(x2,0,wz),b=P(x2,.62,wz);ctx.fillStyle='#121517';ctx.beginPath();ctx.ellipse(a.x,(a.y+b.y)/2,Math.max(.5,a.s*.2),Math.max(.5,(a.y-b.y)/2),0,0,7);ctx.fill()}};
+ const wheels=()=>{for(const wz of T?[z+1.2,far-3,far-1.5]:[z+.75,far-.75]){const a=P(x2,0,wz),b=P(x2,.62,wz);ctx.fillStyle='#121517';ctx.beginPath();ctx.ellipse(a.x,(a.y+b.y)/2,Math.max(.5,a.s*.2),Math.max(.5,(a.y-b.y)/2),0,0,7);ctx.fill()}};
  if(T){
-  wheels();R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');R(x1,x2,.32,hb,body[0]);
+  wheels();R(x1,x2,.32,hb,body[0]);
   if(v.dir>0){R(x1+.08,x1+.42,hb-.32,hb-.12,'#d8322a');R(x2-.42,x2-.08,hb-.32,hb-.12,'#d8322a');R(x1+.08,x2-.08,.32,.5,'#3a3d3f')}
   else R(x1+.15,x2-.15,2.2,3.2,'#2a363c');
  }else{
   // The cabin sits back from the end we see: the hood comes first on oncoming cars, the trunk deck on ours.
   const glass=v.dir>0?'#1d2529':'#2a363c',top=1.45,i1=.2,i2=.36;
-  const c1=z+(v.dir<0?1.25:.95),c2=c1+.75,c4=far-(v.dir<0?.95:1.3),c3=c4-.6;
+  const c1=z+(v.dir<0?1:.8),c2=c1+.6,c4=far-(v.dir<0?.7:1),c3=c4-.45;
   wheels();
   polygon([P(x2-i1,hb,c1),P(x2-i2,top,c2),P(x2-i2,top,c3),P(x2-i1,hb,c4)],'#20292d');          // side windows
   polygon([P(x1+i2,top,c2),P(x2-i2,top,c2),P(x2-i2,top,c3),P(x1+i2,top,c3)],lighten(body[0])); // roof
   polygon([P(x1+i1,hb,c1),P(x2-i1,hb,c1),P(x2-i2,top,c2),P(x1+i2,top,c2)],glass);             // windshield / rear window, sloped
   polygon([P(x1,hb,z),P(x2,hb,z),P(x2,hb,c1),P(x1,hb,c1)],lighten(body[0]));                 // hood / trunk deck
-  R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');
+  
   R(x1,x2,.32,hb,body[0]);
   if(v.dir>0){R(x1+.08,x1+.42,hb-.3,hb-.12,'#d8322a');R(x2-.42,x2-.08,hb-.3,hb-.12,'#d8322a');R(x1+.6,x2-.6,.42,.62,'#e9e6da')}
   else R(x1+.55,x2-.55,.5,.78,'#1a2023');
