@@ -194,6 +194,8 @@ html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header
 .book .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.book .row.three{grid-template-columns:1fr 1fr 1fr}
 .book input,.book select,.book textarea{font:16px 'DM Sans',sans-serif;color:#15181b;background:#ffffffeb;border:1px solid #ffffff99;border-radius:8px;padding:10px 12px;width:100%;text-transform:none;letter-spacing:0}
 .book textarea{resize:vertical;min-height:86px}
+/* The page is color-scheme:dark, which draws the native date icon/pickers white on these white fields. */
+.book input,.book select,.book textarea{color-scheme:light}
 .book input:focus,.book select:focus,.book textarea:focus{outline:3px solid #ff6600;outline-offset:1px;background:#fff}
 .book .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .book-error{margin:0 0 12px;padding:10px 12px;border-radius:8px;background:#7a1d12d9;border:1px solid #ff9b8a;font-size:14.5px}
