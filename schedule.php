@@ -15,7 +15,9 @@ const APPT_SUBJECT = 'Appointment Request (autohouseautomotive.com)';
 date_default_timezone_set('America/Chicago');
 
 function v(string $k): string {
-    return htmlspecialchars(trim((string)($_POST[$k] ?? '')), ENT_QUOTES, 'UTF-8');
+    // ?service=... (from the homepage's service tiles) pre-fills the issue box.
+    $fallback = $k === 'appt_issue' ? (string)($_GET['service'] ?? '') : '';
+    return htmlspecialchars(trim((string)($_POST[$k] ?? $fallback)), ENT_QUOTES, 'UTF-8');
 }
 function sel(string $k, string $val, bool $default = false): string {
     if (!isset($_POST[$k])) return $default ? 'selected' : '';
