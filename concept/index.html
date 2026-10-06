@@ -150,6 +150,21 @@ html.fly-locked{overflow:hidden}
 .fly-photo[hidden]{display:none}
 @media(max-width:700px){.header-logo{height:38px;padding:2px 6px}}
 @media(max-width:480px){.cta-long{display:none}.cta-short{display:inline}}
+/* Header bar in the logo's orange (#ff6600); the logo plate is bigger and hangs below the bar.
+   ?bar=dark previews a charcoal bar with an orange underline instead. */
+header{background:#ff6600;border-bottom:0;box-shadow:0 2px 14px #00000040;min-height:68px}
+.wordmark,.wordmark small{color:#1a1a1a}.wordmark small{opacity:.85}
+.header-hours{color:#3a2210}
+.header-phone{color:#141414;border-bottom-color:#14141473}.header-phone:hover{border-color:#141414}
+.header-cta{background:#141414;color:#fff}.header-cta:hover{background:#333}
+.header-phone:focus-visible,.header-cta:focus-visible{outline-color:#141414}
+.wordmark{align-self:flex-start;margin-top:-2px}
+.header-logo{height:96px;margin-bottom:-46px;padding:7px 13px;border-radius:10px;background:#fff;box-shadow:0 8px 22px #0000005c}
+@media(max-width:700px){header{padding:10px 12px}.header-logo{height:54px;margin-bottom:-20px;padding:4px 8px;border-radius:8px}}
+html.bar-dark header{background:#1b1d20;border-bottom:3px solid #ff6600}
+html.bar-dark .wordmark,html.bar-dark .wordmark small,html.bar-dark .header-phone{color:#fff}
+html.bar-dark .header-hours{color:#cfd3d6}html.bar-dark .header-phone{border-bottom-color:#ffffff59}
+html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header-cta:hover{background:#ff7d26}
 </style>
 </head>
 <body>
@@ -176,14 +191,15 @@ html.fly-locked{overflow:hidden}
 <noscript><p class="no-js">AutoHouse Automotive · 359 E Potter St, Wood Dale, IL 60191 · Mon–Fri 8–6 · <a href="tel:+16307086586" style="color:inherit">(630) 708-6586</a> · <a href="/schedule.php" style="color:inherit">Request an appointment</a></p></noscript>
 <script>
 'use strict';
+if(/[?&]bar=dark\b/.test(location.search))document.documentElement.classList.add('bar-dark');
 const BOOKING_URL='/schedule.php';
 const PHONE='(630) 708-6586',TEL='tel:+16307086586';
 const chapters=[
- {name:'Services',label:'NEXT EXIT · WOOD DALE',title:'AutoHouse Services',body:'',foot:'DIAGNOSE ACCURATELY · COMMUNICATE CLEARLY',panels:true},
- {name:'Every make',label:'STOP 02 · EVERY MAKE',title:'Every make<br>Done right',body:'Ford and Chevy trucks, Japanese imports, BMW and Volvo. Whatever you drive, it’s already been in our bays.',foot:'DOMESTIC · ASIAN · EUROPEAN'},
- {name:'Diagnostics first',label:'STOP 03 · DIAGNOSTICS FIRST',title:'Understand the system<br>Then repair it',body:'A warning light, a noise or a drivability problem: every concern starts with accurate diagnosis, not guesswork or parts swapping.',foot:'TEST · MEASURE · VERIFY'},
- {name:'Straight answers',label:'STOP 04 · STRAIGHT ANSWERS',title:'Straight answers<br>No surprises',body:'We tell you what your car needs and what it doesn’t, and every repair carries a 12-month parts and labor warranty.',foot:'12-MONTH WARRANTY · PARTS AND LABOR'},
- {name:'Visit AutoHouse',label:'STOP 05 · VISIT AUTOHOUSE',title:'Your next stop',body:'359 E Potter St<br>Wood Dale, IL 60191',foot:'OPEN MONDAY – FRIDAY · 8 TO 6 · MINUTES FROM O’HARE',brand:true,booking:true,phone:true}
+ {name:'Services',label:'NEXT EXIT · WOOD DALE',title:'Everything your car needs',body:'',foot:'DIAGNOSTICS TO DRIVETRAIN · ROUTINE TO COMPLEX',panels:true},
+ {name:'By the numbers',label:'STOP 02 · BY THE NUMBERS',title:'2,500+ repairs<br>in 2024',body:'49 makes serviced, a 4.9-star rating on Google, and a 12-month warranty on parts and labor.',foot:'A BUSY SHOP THAT’S EARNED ITS REPUTATION'},
+ {name:'We service',label:'STOP 03 · WE SERVICE',title:'Your make is<br>already in our bays',body:'Domestic trucks, Japanese imports and European vehicles, and BMW is a particular strength. Whatever you drive, we’ve seen it.',foot:'FORD · CHEVROLET · BMW · GMC · TOYOTA · VOLVO'},
+ {name:'Why AutoHouse',label:'STOP 04 · WHY AUTOHOUSE',title:'Straight answers<br>No surprises',body:'We tell you what your car needs and what it doesn’t. Accurate diagnosis before any work begins: no guesswork, no upsells, no inflated estimates.',foot:'ASE CERTIFIED · 12-MONTH WARRANTY'},
+ {name:'Find us',label:'STOP 05 · FIND US',title:'Your next stop',body:'359 E Potter St<br>Wood Dale, IL 60191',foot:'MON–FRI 8–6 · SAT BY APPOINTMENT · AFTER-HOURS DROP-OFF',brand:true,booking:true,phone:true}
 ];
 const I=(d)=>`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const PANELS=[
@@ -192,18 +208,18 @@ const PANELS=[
  {t:'Diagnostics',i:I('<rect x="6" y="9" width="36" height="24" rx="3"/><path d="M11 25l6-7 5 5 6-9 6 6"/><path d="M18 41h12M24 33v8"/>')},
  {t:'A/C Service',i:I('<path d="M24 5v38M7.5 14.5l33 19M7.5 33.5l33-19"/><path d="M19 8l5 4 5-4M19 40l5-4 5 4"/>')},
  {t:'Electrical',i:I('<path d="M27 4L11 27h11l-3 17 17-24H25z"/>')},
- {t:'Timing Belts',i:I('<circle cx="14" cy="31" r="8"/><circle cx="34" cy="15" r="7"/><path d="M9 25L29 9.5M19 37.5L39 20"/>')},
+ {t:'Engine Repair',i:I('<path d="M10 18h7l3-4h9l3 4h5v6h4v-4h3v14h-3v-4h-4v8h-7l-3 4H17l-3-4h-4z"/><path d="M10 24H5v8h5"/>')},
  {t:'Inspections',i:I('<rect x="10" y="6" width="24" height="34" rx="2"/><path d="M15 15h14M15 22h9"/><circle cx="32" cy="32" r="7"/><path d="M37 37l5 5"/>')},
  {t:'Schedule',i:I('<rect x="6" y="9" width="36" height="32" rx="3"/><path d="M6 18h36M15 5v8M33 5v8"/><path d="M17 29l5 5 9-10"/>')}
 ];
-// Flyout copy. Shared services follow autohousenwa.com's wording; Electrical and Timing Belts are Chicago's.
+// Flyout copy. Shared services follow autohousenwa.com's wording; Electrical and Engine Repair are Chicago's.
 const SERVICES={
  1:{t:'Manufacturer-Spec Oil Service',p:'Oil and filter service performed to manufacturer specifications using the correct oil grade and quality components. This service is designed for long-term engine protection, not quick-lube shortcuts.',l:['Verify oil specification and capacity','Replace oil filter and inspect for leaks','Check key fluid levels and under-hood condition','Reset maintenance reminder (when applicable)']},
  2:{t:'Brake System Service',p:'Brake work should be based on inspection and measurements, not guessing. We evaluate wear, braking performance and hydraulic condition before recommending parts.',l:['Measure pad and rotor wear','Inspect calipers, hardware and brake hoses','Check brake fluid condition','Recommend repairs based on safety and reliability']},
  3:{t:'Advanced Engine Diagnostics',p:'Modern vehicles require data-driven diagnostics. We use scan data, testing and step-by-step verification to identify the cause of a problem before repairs begin.',l:['Scan for codes and review live data','Guided testing to confirm root cause','Clear explanation of findings and next steps','Repair recommendations based on test results']},
  4:{t:'A/C System Diagnostics & Repair',p:'A/C problems can come from leaks, pressure control issues, electrical faults or component failure. We diagnose first, then recommend the correct repair.',l:['System performance evaluation','Leak and pressure diagnostics as needed','Electrical checks for controls and fans','Repair options explained clearly before work begins']},
  5:{t:'Electrical Diagnostics',p:'Electrical faults rarely announce where they are. We trace them with factory wiring diagrams, measurements and testing, instead of replacing parts until the problem goes away.',l:['Battery, charging and starting system tests','Circuit testing with factory wiring diagrams','Module and network communication checks','Repair options explained before work begins']},
- 6:{t:'Timing Belt Replacement',p:'A timing belt that fails can take the engine with it. We replace it on the manufacturer’s schedule, along with the parts that wear out alongside it.',l:['Belt replacement at the manufacturer’s interval','Tensioners, idlers and water pump inspected or replaced as needed','Cam and crank timing verified before startup','Written estimate before work begins']},
+ 6:{t:'Engine Repair',p:'From cooling system and timing belt work to major engine repairs, every job starts with diagnosis, and you approve the repair before work begins.',l:['Cooling system repair','Timing belt and water pump replacement','Oil leaks, gaskets and seals','Written estimate before work begins']},
  7:{t:'Pre-Purchase Inspections',p:'A thorough inspection can prevent expensive surprises. Whether you’re buying a used vehicle or just want peace of mind, we provide a clear report and prioritized recommendations.',l:['Visual inspection of major systems','Brake, tire, fluid and leak checks','Notes on safety and immediate concerns','Clear summary of findings and next steps']}
 };
 const serviceLink=t=>`${BOOKING_URL}?service=${encodeURIComponent(t)}`;
@@ -478,6 +494,7 @@ function drawPlane(){
  ctx.beginPath();ctx.moveTo(-s*.15,s*.03);ctx.lineTo(s*.3,s*.34);ctx.lineTo(s*.42,s*.34);ctx.lineTo(s*.22,s*.03);ctx.closePath();ctx.fill();
  ctx.beginPath();ctx.ellipse(s*.1,s*.17,s*.11,s*.045,0,0,Math.PI*2);ctx.fill();
  const lg=ctx.createRadialGradient(-s*.95,s*.03,0,-s*.95,s*.03,s*.35);lg.addColorStop(0,'#fff6dcee');lg.addColorStop(1,'#fff6dc00');ctx.fillStyle=lg;ctx.beginPath();ctx.arc(-s*.95,s*.03,s*.35,0,Math.PI*2);ctx.fill();
+ const mg=ctx.createRadialGradient(s*.04,s*.1,0,s*.04,s*.1,s*.17);mg.addColorStop(0,'#fff6dccc');mg.addColorStop(1,'#fff6dc00');ctx.fillStyle=mg;ctx.beginPath();ctx.arc(s*.04,s*.1,s*.17,0,Math.PI*2);ctx.fill();
  ctx.restore();
 }
 // Roadside buildings: Wood Dale's warehouses, office blocks and airport hotels, mixed in with the trees.
@@ -503,6 +520,7 @@ const TRAFFIC=[];
  for(let i=0;i<6;i++)TRAFFIC.push({x:-.9,dir:1,base:i*107+q()*40,rel:q()<.5?-.22-q()*.1:.12+q()*.12,c:CAR_COLS[(i*3)%8],truck:i===3});
  for(let i=0;i<12;i++)TRAFFIC.push({x:q()<.5?-12.1:-15.7,dir:-1,base:i*53+q()*30,rel:-1.8-q()*.5,c:CAR_COLS[(i*5+1)%8],truck:i%5===2});
 })();
+const lighten=hex=>{const n=parseInt(hex.slice(1),16),f=c=>Math.min(255,Math.round(c+(255-c)*.14));return'#'+[n>>16,n>>8&255,n&255].map(c=>f(c).toString(16).padStart(2,'0')).join('')};
 const wrapZ=v=>((v%640)+640)%640-40;
 function vehicle(v,z){
  if(z<2.5||z>600)return;
@@ -512,15 +530,27 @@ function vehicle(v,z){
  polygon([P(x1-.1,0,z),P(x2+.25,0,z),P(x2+.25,0,far),P(x1-.1,0,far)],'#10161a44');
  // Right side: every vehicle is left of the camera.
  polygon([P(x2,.32,z),P(x2,.32,far),P(x2,hb,far),P(x2,hb,z)],body[1]);
- if(!T)polygon([P(x2-.18,hb,z+1.3),P(x2-.18,hb,far-1),P(x2-.32,1.42,far-1.4),P(x2-.32,1.42,z+1.7)],'#20292d');
- for(const wz of T?[z+1.2,far-3.5,far-1.5]:[z+.9,far-.9]){const a=P(x2,0,wz),b=P(x2,.62,wz);ctx.fillStyle='#121517';ctx.beginPath();ctx.ellipse(a.x,(a.y+b.y)/2,Math.max(.5,a.s*.2),Math.max(.5,(a.y-b.y)/2),0,0,7);ctx.fill()}
  const R=(u1,u2,y1,y2,col)=>{const q=P(u1,y1,z),t=P(u2,y2,z);ctx.fillStyle=col;ctx.fillRect(q.x,t.y,t.x-q.x,q.y-t.y)};
- R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');
- R(x1,x2,.32,hb,body[0]);
- if(!T){polygon([P(x1+.18,hb,z),P(x2-.18,hb,z),P(x2-.32,1.42,z),P(x1+.32,1.42,z)],v.dir>0?'#1d2529':'#2a363c');R(x1+.32,x2-.32,1.42,1.47,body[0])}
- if(v.dir>0){R(x1+.08,x1+.42,hb-.32,hb-.12,'#d8322a');R(x2-.42,x2-.08,hb-.32,hb-.12,'#d8322a');if(T)R(x1+.08,x2-.08,.32,.5,'#3a3d3f')}
- else{if(T)R(x1+.15,x2-.15,2.2,3.2,'#2a363c');
-  for(const hx of[x1+.3,x2-.3]){const c=P(hx,.62,z),rad=Math.max(1.2,c.s*.32),gl2=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,rad*2.4);gl2.addColorStop(0,'#fff8e6');gl2.addColorStop(.3,'#fff1c899');gl2.addColorStop(1,'#fff1c800');ctx.fillStyle=gl2;ctx.fillRect(c.x-rad*2.4,c.y-rad*2.4,rad*4.8,rad*4.8)}}
+ const wheels=()=>{for(const wz of T?[z+1.2,far-3.5,far-1.5]:[z+.9,far-.9]){const a=P(x2,0,wz),b=P(x2,.62,wz);ctx.fillStyle='#121517';ctx.beginPath();ctx.ellipse(a.x,(a.y+b.y)/2,Math.max(.5,a.s*.2),Math.max(.5,(a.y-b.y)/2),0,0,7);ctx.fill()}};
+ if(T){
+  wheels();R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');R(x1,x2,.32,hb,body[0]);
+  if(v.dir>0){R(x1+.08,x1+.42,hb-.32,hb-.12,'#d8322a');R(x2-.42,x2-.08,hb-.32,hb-.12,'#d8322a');R(x1+.08,x2-.08,.32,.5,'#3a3d3f')}
+  else R(x1+.15,x2-.15,2.2,3.2,'#2a363c');
+ }else{
+  // The cabin sits back from the end we see: the hood comes first on oncoming cars, the trunk deck on ours.
+  const glass=v.dir>0?'#1d2529':'#2a363c',top=1.45,i1=.2,i2=.36;
+  const c1=z+(v.dir<0?1.25:.95),c2=c1+.75,c4=far-(v.dir<0?.95:1.3),c3=c4-.6;
+  wheels();
+  polygon([P(x2-i1,hb,c1),P(x2-i2,top,c2),P(x2-i2,top,c3),P(x2-i1,hb,c4)],'#20292d');          // side windows
+  polygon([P(x1+i2,top,c2),P(x2-i2,top,c2),P(x2-i2,top,c3),P(x1+i2,top,c3)],lighten(body[0])); // roof
+  polygon([P(x1+i1,hb,c1),P(x2-i1,hb,c1),P(x2-i2,top,c2),P(x1+i2,top,c2)],glass);             // windshield / rear window, sloped
+  polygon([P(x1,hb,z),P(x2,hb,z),P(x2,hb,c1),P(x1,hb,c1)],lighten(body[0]));                 // hood / trunk deck
+  R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');
+  R(x1,x2,.32,hb,body[0]);
+  if(v.dir>0){R(x1+.08,x1+.42,hb-.3,hb-.12,'#d8322a');R(x2-.42,x2-.08,hb-.3,hb-.12,'#d8322a');R(x1+.6,x2-.6,.42,.62,'#e9e6da')}
+  else R(x1+.55,x2-.55,.5,.78,'#1a2023');
+ }
+ if(v.dir<0)for(const hx of[x1+.3,x2-.3]){const c=P(hx,T?.62:.72,z),rad=Math.max(1.2,c.s*.32),gl2=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,rad*2.4);gl2.addColorStop(0,'#fff8e6');gl2.addColorStop(.3,'#fff1c899');gl2.addColorStop(1,'#fff1c800');ctx.fillStyle=gl2;ctx.fillRect(c.x-rad*2.4,c.y-rad*2.4,rad*4.8,rad*4.8)}
  ctx.restore();
 }
 // Concrete median barrier between the carriageways.
