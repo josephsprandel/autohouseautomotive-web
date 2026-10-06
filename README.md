@@ -12,3 +12,11 @@ The AutoHouse Automotive of Chicagoland website (Wood Dale, IL; hosted on cPanel
 Deploy: push here, then in cPanel → Git Version Control → Manage: "Update from Remote", "Deploy HEAD Commit" (`.cpanel.yml`). Deploys copy/overwrite; they never delete.
 
 Test locally (host runs PHP 7.3; `schedule.php` is tested on 7.3 and 8.3): `docker run --rm -p 127.0.0.1:8089:80 -v "$PWD":/var/www/html:ro php:7.3-apache`
+
+## AutoHouse Radio
+The dash-screen button (♪ on phones) opens the radio: a playlist, or **WAHC 100.9 AutoHouse FM**, a live loop of
+station ID → song, synced to the clock. Songs: `assets/radio/<slug>.m4a`, the lyric videos' soundtracks
+stream-copied from Drive "Suno Video/<Title> - TV 16x9.mp4"; caption timings from "<Title> - lyrics.json" in the same
+folder (the renderer pads 0.6 s before the music). Station IDs: `assets/radio/fm-<slug>.m4a`, made by
+`tools/make_bumpers.py`. To add a song, add both files and extend `RADIO` (+ a `BUMPERS` entry) in `index.html`.
+

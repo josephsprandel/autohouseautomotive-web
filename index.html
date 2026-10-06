@@ -304,6 +304,14 @@ html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header
 .radio-modal .rm-btn:focus-visible,.radio-modal .rm-track:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .radio-modal .rm-cc{display:flex;align-items:center;gap:8px;flex-direction:row;font-size:13px;letter-spacing:.4px;text-transform:none;margin-top:4px;cursor:pointer}
 .radio-modal .rm-cc input{width:18px;height:18px;accent-color:#ff6600}
+.radio-modal .rm-src{display:flex;gap:6px;padding:4px;margin:0 0 14px;border-radius:999px;background:#00000040;border:1px solid #ffffff26}
+.radio-modal .rm-src button{flex:1;min-height:40px;border:0;border-radius:999px;background:none;color:#fff0e2;font:600 14.5px 'DM Sans',sans-serif;letter-spacing:.3px;cursor:pointer}
+.radio-modal .rm-src button[aria-pressed=true]{background:#ff6600;color:#141414}
+.radio-modal .rm-src button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.radio-modal .rm-live{display:none;align-items:center;justify-content:center;gap:8px;font-size:12px;letter-spacing:2px;font-weight:700;color:#ffd2b0}
+.radio-modal .rm-live i{width:8px;height:8px;border-radius:50%;background:#ff3b2f;box-shadow:0 0 8px #ff3b2f}
+.radio-modal.fm .rm-seek,.radio-modal.fm .rm-times,.radio-modal.fm #radio-prev,.radio-modal.fm #radio-next{display:none}
+.radio-modal.fm .rm-live{display:flex}
 </style>
 </head>
 <body>
@@ -373,11 +381,13 @@ html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header
   <div class="book-kicker">Now on the dash</div>
   <h2 id="radio-heading">AutoHouse Radio</h2>
   <p class="book-sub">Songs from the shop. Keep driving, the music keeps playing.</p>
+  <div class="rm-src" role="group" aria-label="Source"><button type="button" id="src-list" aria-pressed="true">Playlist</button><button type="button" id="src-fm" aria-pressed="false">WAHC 100.9 FM</button></div>
   <ul class="rm-list" id="radio-list"></ul>
   <div class="rm-now">
    <div class="rm-title" id="radio-now"><small>Ready</small>Pick a song</div>
    <input class="rm-seek" id="radio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek">
    <div class="rm-times"><span id="radio-cur">0:00</span><span id="radio-dur">0:00</span></div>
+   <div class="rm-live"><i></i>LIVE · AUTOHOUSE FM, WOOD DALE</div>
    <div class="rm-ctrls"><button class="rm-btn" id="radio-prev" type="button" aria-label="Previous song">⏮</button><button class="rm-btn play" id="radio-play" type="button" aria-label="Play">▶</button><button class="rm-btn" id="radio-next" type="button" aria-label="Next song">⏭</button></div>
    <label class="rm-cc"><input type="checkbox" id="radio-captions" checked> Show lyrics as captions</label>
   </div>
@@ -974,34 +984,69 @@ bookForm.addEventListener('submit',async e=>{e.preventDefault();bookErr.hidden=t
  }catch(x){bookError(x.message||'Sorry, your request could not be sent. Please call us at (630) 708-6586.')}
  finally{bookBtn.disabled=false;bookBtn.textContent='Send appointment request'}});
 if(location.hash==='#book')openBook();
-// AutoHouse Radio. Audio is the lyric videos' soundtrack (stream-copied AAC); line timings come from the
-// lyric renderer's JSON, which pads each song with LEAD seconds of silence before the music starts.
+// AutoHouse Radio, two sources. Playlist: pick a song. WAHC 100.9 AutoHouse FM: a live loop of station ID →
+// song → station ID …, synced to the wall clock so every listener hears the same moment.
+// Songs are the lyric videos' soundtracks (stream-copied AAC); line timings come from the lyric renderer's JSON,
+// which pads each song with LEAD seconds of silence. Station IDs are made here: a synthesized sting (riser,
+// "Au-to-House-F-M" brass motif, chord hit, pad bed) plus a Piper DJ voice, mastered to the songs' -16 LUFS;
+// voice = [start, end] of the DJ line in seconds. The blend is the overlap: each song starts FM_IN seconds before
+// its ID ends (under the fading pad) and the next ID starts FM_OUT seconds before the song ends (on its ring-out).
 const RADIO=[{"slug":"fresh-oil","title":"Fresh Oil","dur":179.8,"lines":[[18.36,22.13,"Sticker in the window says it's been five thousand"],[22.18,25.14,"I been driving like it doesn't count"],[26.44,30.35,"Dipstick come out dark as Sunday coffee"],[30.4,33.12,"Barely a quart left to talk about"],[34.52,37.89,"Fresh oil, fresh oil"],[37.94,42.03,"Golden going in, black coming out"],[42.08,46.48,"Five quarts and a filter, twenty minutes"],[47.55,50.74,"Cheapest thing you'll ever do right"],[56.62,59.78,"Tech pulls the plug and it pours out slow"],[60.93,63.78,"He don't say nothing, just gives me a look"],[65.08,68.41,"New crush washer, torques it back down"],[68.46,71.82,"Writes the next one on the sticker so I can't forget"],[72.82,76.07,"Fresh oil, fresh oil"],[76.12,80.43,"Golden going in, black coming out"],[80.48,84.84,"Five quarts and a filter, twenty minutes"],[85.85,89.06,"Cheapest thing you'll ever do right"],[106.54,110.4,"Turn the key and the ticking goes quiet"],[111.95,114.68,"Lifters all come up at once"],[115.8,119.09,"Idle settles down where it ought to be"],[119.14,122.72,"Like it's been waiting on me for a month"],[124.28,126.47,"You can pay a little now"],[126.52,128.67,"Or pay for the whole engine later"],[128.72,131.47,"Ain't no third way, baby"],[131.52,133.6,"Ain't no third way"],[133.7,136.1,"Fresh oil, fresh oil"],[136.2,140.1,"Golden going in, black coming out"],[140.2,144.5,"Five quarts and a filter, twenty minutes"],[144.6,149.4,"Cheapest thing you'll ever do right"],[152.9,155.6,"Golden going in."],[155.8,160.0,"Black coming out."]]},{"slug":"rotate-me","title":"Rotate Me","dur":153.8,"lines":[[7.6,11.3,"Front two wearing thin and the back two look brand new"],[11.4,14.75,"Been riding on the same side since the spring of '22"],[14.8,18.7,"You never even noticed, you just floor it out the drive"],[18.75,23.2,"I'm the only thing between you and the road, and I'm getting tired"],[23.3,30.25,"Rotate me, baby, every five thousand miles"],[30.3,38.25,"Front to back and back to front, keep me even for a while"],[38.3,43.85,"Rotate me, baby, don't let me wear down on one side"],[43.9,51.6,"Treat me right and I'll treat you right for forty thousand more miles"],[52.0,56.2,"Penny in the tread and you can see Abe's whole head"],[56.25,60.2,"Cupping on the inside, singing louder than the radio"],[60.25,63.7,"Shop said \"Bring her back in five thousand miles\""],[63.75,67.9,"You said yes, you said sure, and I never saw you again"],[68.0,75.35,"Rotate me, baby, every five thousand miles"],[75.4,83.25,"Front to back and back to front, keep me even for a while"],[83.3,88.95,"Rotate me, baby, don't let me wear down on one side"],[89.0,96.6,"Treat me right and I'll treat you right for forty thousand more miles"],[97.6,101.6,"Ooh, a little balance"],[101.7,104.2,"Ooh, a little air"],[104.3,111.6,"Thirty-five PSI, baby, show me that you care"],[112.5,119.15,"Rotate me, baby, every five thousand miles"],[119.2,127.15,"Front to back and back to front, keep me even for a while"],[127.2,133.45,"Rotate me, baby, don't let me wear down on one side"],[133.5,143.6,"Treat me right and I'll treat you right for forty thousand more miles"]]},{"slug":"need-an-alternator","title":"Need an Alternator","dur":215.04,"lines":[[13.16,16.51,"My Toyota coughs at dawn"],[16.56,19.67,"Battery light glowin' red"],[19.72,23.21,"Turn the key, she thinks about it"],[23.26,26.26,"Like she'd rather stay in bed"],[32.34,34.97,"The radio fades away"],[35.02,38.6,"At the light on Sunset Ave"],[39.54,41.73,"Gauges jumpin' like they're nervous"],[41.78,44.81,"Every time I touch the gas"],[44.86,47.34,"I got a jump last week"],[48.63,50.6,"Still she lost her spark"],[51.58,53.74,"Now the headlights dim"],[55.11,57.36,"And she stalls in the dark"],[58.55,60.44,"Need an alternator"],[61.77,63.84,"Need an alternator"],[64.98,69.68,"Blue Toyota, don't quit on me now"],[71.45,73.3,"Need an alternator"],[74.48,76.64,"Need an alternator"],[78.33,82.26,"Get me home, I'll figure it out"],[84.34,86.29,"There's grease on my knuckles"],[86.34,88.96,"And a belt that likes to scream"],[90.72,92.71,"Every time I hit the AC"],[92.76,95.42,"Sounds like a cat in a machine"],[97.06,99.04,"Bought a battery Tuesday"],[100.17,102.14,"Bought another Friday night"],[103.3,106.23,"Man at the parts store knows my name"],[106.28,108.42,"That ain't a good sign"],[110.48,112.16,"Mechanic said, \"It's tired\""],[113.37,115.32,"Like a mule in the rain"],[116.26,118.21,"\"It ain't the battery, brother"],[118.26,121.62,"It's the thing that charges the thing\""],[123.25,125.16,"Need an alternator"],[126.45,128.5,"Need an alternator"],[129.62,134.34,"Blue Toyota, don't quit on me now"],[136.15,138.16,"Need an alternator"],[139.27,141.36,"Need an alternator"],[142.99,146.92,"Get me home, I'll figure it out"],[149.34,151.63,"I had tools in the trunk"],[151.68,153.9,"And a video on my phone"],[155.04,157.59,"Two hours in the Walmart lot"],[157.64,161.12,"And I'm calling the shop from the curb, alone"],[162.94,165.71,"One new part, one phone call"],[165.76,168.12,"One more Saturday"],[169.62,172.45,"Battery light goes dark at last"],[172.5,174.91,"And I'm back out on my way"],[174.96,176.88,"Need an alternator"],[178.19,180.7,"Need an alternator"],[181.74,186.1,"Blue Toyota, don't quit on me now"],[187.91,189.94,"Need an alternator"],[190.96,193.14,"Need an alternator"],[194.77,198.62,"Get me home, I'll figure it out"]]},{"slug":"cabin-air-filter","title":"Cabin Air Filter","dur":200.56,"lines":[[19.96,21.68,"AC smells like a basement"],[23.47,26.1,"Like a gym bag left out in the rain"],[27.84,30.71,"You've been blaming the kids, you've been blaming the dog"],[30.76,33.36,"You've been driving with the windows down since May"],[36.58,39.31,"So we dropped the glovebox down"],[42.08,43.5,"Unclipped the little door"],[45.96,49.17,"And what we found in there"],[49.22,52.58,"We can't unsee anymore"],[56.3,59.92,"Cabin air filter (cabin air filter)"],[60.58,64.84,"Leaves, a Cheeto, and an acorn stash"],[65.58,69.46,"Cabin air filter (cabin air filter)"],[70.41,73.76,"You've been breathing this since 2019"],[85.34,88.68,"It was white when it was new"],[89.58,93.14,"Now it's the color of coffee grounds"],[94.8,97.9,"Something built a nest in there"],[99.46,102.6,"And something's very disappointed now"],[103.58,106.68,"So we dropped the glovebox down"],[109.1,110.46,"Unclipped the little door"],[113.08,116.35,"And what we found in there"],[116.4,119.36,"We can't unsee anymore"],[123.28,127.46,"Cabin air filter (cabin air filter)"],[128.4,131.8,"Leaves, a Cheeto, and an acorn stash"],[132.58,136.52,"Cabin air filter (cabin air filter)"],[137.36,140.68,"You've been breathing this since 2019"],[143.8,148.44,"In a world where nobody checks the cabin filter"],[150.06,152.38,"One family kept breathing"],[153.88,157.52,"About once a year. Takes ten minutes."],[158.84,161.98,"That's it. That's the movie."],[163.38,167.44,"Cabin air filter (cabin air filter)"],[168.64,172.8,"Leaves, a Cheeto, and an acorn stash"],[173.24,176.96,"Cabin air filter (cabin air filter)"],[177.98,181.6,"You've been breathing this since 2019"]]}];
-const LEAD=.6,audio=document.getElementById('radio-audio'),radio=document.getElementById('radio'),radioBack=document.getElementById('radio-backdrop');
-const cc=document.getElementById('radio-cc'),ccBox=document.getElementById('radio-captions'),seek=document.getElementById('radio-seek'),playBtn=document.getElementById('radio-play');
-const dashBtn=document.getElementById('radio-open'),fab=document.getElementById('radio-fab');
-let track=-1,radioOpen=false,radioReturn=null,ccTimer=null;
-const mmss=t=>`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`;
-const list=document.getElementById('radio-list');
-RADIO.forEach((t,i)=>{const li=document.createElement('li');li.innerHTML=`<button class="rm-track" type="button"><span class="n">${i+1}</span><span class="t">${t.title}</span><span class="d">${mmss(t.dur)}</span></button>`;li.firstChild.onclick=()=>playTrack(i);list.append(li)});
+const BUMPERS={"fresh-oil":{"dur":9.11,"voice":[2.54,6.61],"text":"WAHC, 100.9. AutoHouse FM. Here's Fresh Oil."},"rotate-me":{"dur":10.77,"voice":[2.54,8.27],"text":"AutoHouse FM, 100.9. Keeping Wood Dale rolling, on all four corners. This is Rotate Me."},"need-an-alternator":{"dur":9.17,"voice":[2.54,6.67],"text":"Every make. Every model. WAHC, Wood Dale. Here's Need an Alternator."},"cabin-air-filter":{"dur":10.57,"voice":[2.54,8.07],"text":"Breathe easy, Chicagoland. You're listening to WAHC, AutoHouse FM. This is Cabin Air Filter."}};
+const LEAD=.6,FM_IN=1.7,FM_OUT=1.6;
+const FM=[];{let tt=0;RADIO.forEach((s,i)=>{const b=BUMPERS[s.slug];FM.push({kind:'id',i,src:`/assets/radio/fm-${s.slug}.m4a`,start:tt,dur:b.dur});tt+=b.dur-FM_IN;FM.push({kind:'song',i,src:`/assets/radio/${s.slug}.m4a`,start:tt,dur:s.dur});tt+=s.dur-FM_OUT});FM.len=tt}
+const audio=document.getElementById('radio-audio'),decks=[new Audio(),new Audio()];decks.forEach(d=>{d.preload='auto';d.seg=null;d.addEventListener('timeupdate',()=>fmTick())});
+const radio=document.getElementById('radio'),radioBack=document.getElementById('radio-backdrop'),cc=document.getElementById('radio-cc'),ccBox=document.getElementById('radio-captions');
+const seek=document.getElementById('radio-seek'),playBtn=document.getElementById('radio-play'),dashBtn=document.getElementById('radio-open'),fab=document.getElementById('radio-fab');
+const nowEl=document.getElementById('radio-now'),list=document.getElementById('radio-list');
+let source='list',track=-1,fmOn=false,fmTimer=null,fmKey='',radioOpen=false,radioReturn=null,ccTimer=null;
+const mmss=t=>`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`,esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+RADIO.forEach((t,i)=>{const li=document.createElement('li');li.innerHTML=`<button class="rm-track" type="button"><span class="n">${i+1}</span><span class="t">${t.title}</span><span class="d">${mmss(t.dur)}</span></button>`;li.firstChild.onclick=()=>{setSource('list');playTrack(i)};list.append(li)});
+const mark=i=>[...list.querySelectorAll('.rm-track')].forEach((b,j)=>b.setAttribute('aria-current',String(j===i)));
+function setSource(x){if(x===source)return;source=x;
+ document.getElementById('src-list').setAttribute('aria-pressed',String(x==='list'));document.getElementById('src-fm').setAttribute('aria-pressed',String(x==='fm'));
+ radio.classList.toggle('fm',x==='fm');if(x==='fm')audio.pause();else fmStop();fmKey='';syncState()}
 function playTrack(i){track=(i+RADIO.length)%RADIO.length;const t=RADIO[track];audio.src=`/assets/radio/${t.slug}.m4a`;audio.play().catch(()=>{});
- [...list.querySelectorAll('.rm-track')].forEach((b,j)=>b.setAttribute('aria-current',String(j===track)));
- document.getElementById('radio-now').innerHTML=`<small>Now playing</small>${t.title}`;document.getElementById('radio-dur').textContent=mmss(t.dur)}
-function togglePlay(){if(track<0)return playTrack(0);audio.paused?audio.play().catch(()=>{}):audio.pause()}
-function syncState(){const on=!audio.paused&&track>=0,t=RADIO[track];
- playBtn.textContent=on?'❚❚':'▶';playBtn.setAttribute('aria-label',on?'Pause':'Play');fab.classList.toggle('playing',on);
- dashBtn.textContent=track<0?'▶ AUTOHOUSE RADIO':(on?'♪ ':'❚❚ ')+t.title.toUpperCase();
+ mark(track);nowEl.innerHTML=`<small>Now playing</small>${t.title}`;document.getElementById('radio-dur').textContent=mmss(t.dur)}
+function togglePlay(){if(source==='fm')return fmOn?fmStop():fmStart();if(track<0)return playTrack(0);audio.paused?audio.play().catch(()=>{}):audio.pause()}
+// ---- FM: two decks, scheduled from the clock
+const fmNow=()=>(Date.now()/1000)%FM.len,segOff=(x,t)=>((t-x.start)%FM.len+FM.len)%FM.len,fmActive=t=>FM.filter(x=>segOff(x,t)<x.dur);
+const fmCurrent=(t,act)=>{const id=act.find(x=>x.kind==='id'),song=act.find(x=>x.kind==='song');return id&&(!song||segOff(id,t)<id.dur-FM_IN)?id:(song||id)};
+function fmStart(){fmOn=true;fmTick();
+ // Unlock the idle deck inside this tap too (iOS lets an element play later only once a gesture has started it).
+ const t=fmNow(),next=FM.filter(x=>segOff(x,t)>=x.dur).sort((p,q)=>(FM.len-segOff(p,t))-(FM.len-segOff(q,t)))[0],free=decks.find(d=>!d.seg);
+ if(free&&next){free.seg=next;free.src=next.src;free.muted=true;free.play().then(()=>{if(free.seg===next&&segOff(next,fmNow())>=next.dur){free.pause();free.currentTime=0}free.muted=false}).catch(()=>{free.muted=false})}
+ clearInterval(fmTimer);fmTimer=setInterval(fmTick,100);syncState()}
+function fmStop(){fmOn=false;clearInterval(fmTimer);decks.forEach(d=>{d.pause();d.seg=null});syncState()}
+function fmTick(){if(!fmOn)return;const t=fmNow(),act=fmActive(t),soon=FM.find(x=>!act.includes(x)&&FM.len-segOff(x,t)<4);
+ decks.forEach(d=>{if(d.seg&&!act.includes(d.seg)&&d.seg!==soon){d.pause();d.seg=null}});
+ for(const x of act){let d=decks.find(k=>k.seg===x);if(!d){d=decks.find(k=>!k.seg);if(!d)continue;d.seg=x;d.src=x.src}
+  const want=segOff(x,t);if(d.readyState>=1&&Math.abs(d.currentTime-want)>.35)d.currentTime=want;if(d.paused&&want<x.dur-.2)d.play().catch(()=>{})}
+ if(soon&&!decks.some(d=>d.seg===soon)){const d=decks.find(k=>!k.seg);if(d){d.seg=soon;d.src=soon.src;d.load()}}
+ const c=fmCurrent(t,act);if(!c)return;const key=c.kind+c.i;if(key===fmKey)return;fmKey=key;const title=RADIO[c.i].title;
+ mark(c.i);nowEl.innerHTML=c.kind==='id'?`<small>WAHC 100.9 · Station ID</small>Up next: ${title}`:`<small>WAHC 100.9 · Now playing</small>${title}`;
+ dashBtn.textContent=c.kind==='id'?'WAHC 100.9 FM':'WAHC ♪ '+title.toUpperCase()}
+function syncState(){const on=source==='fm'?fmOn:(!audio.paused&&track>=0);
+ playBtn.textContent=on?'❚❚':'▶';playBtn.setAttribute('aria-label',source==='fm'?(on?'Stop':'Tune in'):(on?'Pause':'Play'));fab.classList.toggle('playing',on);
+ if(source==='list')dashBtn.textContent=track<0?'▶ AUTOHOUSE RADIO':(on?'♪ ':'❚❚ ')+RADIO[track].title.toUpperCase();
+ else if(!on){dashBtn.textContent='▶ AUTOHOUSE RADIO';nowEl.innerHTML='<small>WAHC 100.9 · AutoHouse FM</small>Press play to tune in';mark(-1);fmKey=''}
  clearInterval(ccTimer);if(on)ccTimer=setInterval(caption,100);caption()}
-function caption(){const t=RADIO[track];
- if(!t||audio.paused||!ccBox.checked){cc.classList.remove('on');return}
- const now=audio.currentTime-LEAD,line=t.lines.find(l=>now>=l[0]-.05&&now<l[1]+.35);
- const html=line?line[2].replace(/&/g,'&amp;').replace(/</g,'&lt;'):(now<t.lines[0][0]?`<span class="cc-title">♪ ${t.title}</span> · AutoHouse Automotive`:'♪');
- if(cc.innerHTML!==html)cc.innerHTML=html;cc.classList.add('on')}
-audio.addEventListener('play',syncState);audio.addEventListener('pause',syncState);audio.addEventListener('ended',()=>playTrack(track+1));
+// ---- captions
+function songLine(t,ct){const now=ct-LEAD,l=t.lines.find(k=>now>=k[0]-.05&&now<k[1]+.35);return l?esc(l[2]):(now<t.lines[0][0]?`<span class="cc-title">♪ ${t.title}</span> · AutoHouse Automotive`:'♪')}
+function caption(){let html='';
+ if(ccBox.checked){
+  if(source==='list'&&track>=0&&!audio.paused)html=songLine(RADIO[track],audio.currentTime);
+  else if(source==='fm'&&fmOn){const t=fmNow(),c=fmCurrent(t,fmActive(t));
+   if(c&&c.kind==='id'){const b=BUMPERS[RADIO[c.i].slug],o=segOff(c,t);html=o>=b.voice[0]-.1&&o<b.voice[1]+.3?esc(b.text):'<span class="cc-title">WAHC 100.9</span> · AutoHouse FM'}
+   else if(c){const d=decks.find(k=>k.seg===c);html=songLine(RADIO[c.i],d&&d.readyState>=1?d.currentTime:segOff(c,t))}}}
+ if(!html){cc.classList.remove('on');return}if(cc.innerHTML!==html)cc.innerHTML=html;cc.classList.add('on')}
+// ---- playlist audio, controls, modal
+audio.addEventListener('play',syncState);audio.addEventListener('pause',syncState);audio.addEventListener('ended',()=>{if(source==='list')playTrack(track+1)});
 audio.addEventListener('timeupdate',()=>{const t=RADIO[track];if(!t)return;if(!seek.matches(':active'))seek.value=audio.currentTime/(audio.duration||t.dur)*100;document.getElementById('radio-cur').textContent=mmss(audio.currentTime)});
 seek.addEventListener('input',()=>{const t=RADIO[track];if(t)audio.currentTime=seek.value/100*(audio.duration||t.dur)});
 ccBox.addEventListener('change',caption);
 playBtn.onclick=togglePlay;document.getElementById('radio-prev').onclick=()=>playTrack(audio.currentTime>3?track:track-1);document.getElementById('radio-next').onclick=()=>playTrack(track+1);
+document.getElementById('src-list').onclick=()=>setSource('list');document.getElementById('src-fm').onclick=()=>{setSource('fm');if(!fmOn)fmStart()};
 function openRadio(){closeFlyout();radioReturn=document.activeElement;radioOpen=true;document.documentElement.classList.add('fly-locked');
  radio.hidden=false;radioBack.hidden=false;requestAnimationFrame(()=>{radio.classList.add('open');radioBack.classList.add('open')});
  (list.querySelector('[aria-current=true]')||list.querySelector('.rm-track')).focus({preventScroll:true})}
