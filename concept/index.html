@@ -173,6 +173,39 @@ html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header
 .route-label{color:#fff8ee}
 /* Last sign: MUTCD blue like the first (motorist-services blue), not guide green. */
 .road-sign[data-index="4"] .sign-face{background-color:#1d4f91;box-shadow:0 0 0 5px #173f73,4px 7px 0 5px #0e2a4f,0 20px 35px #152c3133}
+/* Appointment modal: the nav window's orange glass over the scene, solid fields for legibility. */
+.book-backdrop{position:fixed;inset:0;z-index:13;background:#0a0f1438;opacity:0;transition:opacity .25s}
+.book-backdrop.open{opacity:1}
+.book{position:fixed;z-index:14;left:50%;top:calc(50% + 34px);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 104px);display:flex;flex-direction:column;
+  transform:translate(-50%,-46%);opacity:0;transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1);border-radius:16px;overflow:hidden;color:#fff;font-family:'DM Sans',sans-serif;
+  background:linear-gradient(160deg,#ff660059,#ff66002e 55%,#14161980),#1a1c1f66;border:1px solid #ffb27a73;box-shadow:0 24px 60px #0000006b;
+  -webkit-backdrop-filter:blur(18px) saturate(1.25);backdrop-filter:blur(18px) saturate(1.25)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.book{background:linear-gradient(160deg,#a8450bf2,#2a1d14f5)}}
+.book.open{opacity:1;transform:translate(-50%,-50%)}
+.book[hidden],.book-backdrop[hidden]{display:none}
+.book-scroll{overflow-y:auto;overscroll-behavior:contain;padding:26px 28px 24px}
+.book-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid #ffffff59;background:#00000033;color:#fff;font-size:22px;line-height:1;cursor:pointer;z-index:1}
+.book-kicker{font-size:11px;letter-spacing:1.8px;font-weight:700;text-transform:uppercase;color:#ffd2b0}
+.book h2{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:36px;line-height:1.05;margin:6px 0 8px;font-weight:600}
+.book-sub{margin:0 0 18px;font-size:15.5px;line-height:1.5;color:#fff4ea}
+.book fieldset{border:0;margin:0 0 16px;padding:0;min-width:0}
+.book legend{padding:0 0 8px;font-size:11px;letter-spacing:1.6px;font-weight:700;text-transform:uppercase;color:#ffd2b0;border-bottom:1px solid #ffffff33;width:100%;margin-bottom:10px}
+.book label{display:flex;flex-direction:column;gap:5px;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:#fff3e6;min-width:0}
+.book .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.book .row.three{grid-template-columns:1fr 1fr 1fr}
+.book input,.book select,.book textarea{font:16px 'DM Sans',sans-serif;color:#15181b;background:#ffffffeb;border:1px solid #ffffff99;border-radius:8px;padding:10px 12px;width:100%;text-transform:none;letter-spacing:0}
+.book textarea{resize:vertical;min-height:86px}
+.book input:focus,.book select:focus,.book textarea:focus{outline:3px solid #ff6600;outline-offset:1px;background:#fff}
+.book .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.book-error{margin:0 0 12px;padding:10px 12px;border-radius:8px;background:#7a1d12d9;border:1px solid #ff9b8a;font-size:14.5px}
+.book-submit{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border:0;border-radius:8px;background:#ff6600;color:#141414;font:700 17px 'DM Sans',sans-serif;cursor:pointer;box-shadow:0 2px 0 #00000030}
+.book-submit:hover{background:#ff7d26}.book-submit:disabled{opacity:.7;cursor:progress}
+.book-submit:focus-visible,.book-close:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.book-note{margin:12px 0 0;font-size:13px;color:#fff0e2;text-align:center}.book-note a,.book-done a{color:#fff;font-weight:700}
+.book-done{padding:8px 0 4px}.book-done p{font-size:16px;line-height:1.55;margin:0 0 12px;color:#fff4ea}.book-done .book-submit{margin-top:18px}
+@media(max-width:700px){.book{left:0;right:0;top:auto;bottom:0;width:auto;max-height:92vh;border-radius:16px 16px 0 0;transform:translateY(105%)}
+ .book.open{transform:none}.book-scroll{padding:22px 18px 20px}.book .row.three{grid-template-columns:1fr 1fr}.book .row.three label:first-child{grid-column:1/-1}}
+@media(max-width:380px){.book .row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.book,.book-backdrop{transition:none}}
 </style>
 </head>
 <body>
@@ -196,6 +229,42 @@ html.bar-dark .header-cta{background:#ff6600;color:#141414}html.bar-dark .header
  <div class="fly-actions"><a class="fly-book" id="fly-book" href="/schedule.php">Request this service</a>
   <div class="fly-row"><a href="tel:+16307086586">Call (630) 708-6586</a></div></div>
 </aside>
+<div class="book-backdrop" id="book-backdrop" hidden></div>
+<div class="book" id="book" role="dialog" aria-modal="true" aria-labelledby="book-title" hidden>
+ <button class="book-close" id="book-close" type="button" aria-label="Close">×</button>
+ <div class="book-scroll">
+  <form id="book-form" novalidate>
+   <div class="book-kicker">AutoHouse · Wood Dale, IL</div>
+   <h2 id="book-title">Request an appointment</h2>
+   <p class="book-sub">Tell us what’s going on and when works for you. We’ll confirm by phone or email, usually the same business day.</p>
+   <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+   <fieldset><legend>Your information</legend>
+    <div class="row"><label>First name *<input name="appt_fname" autocomplete="given-name" required></label><label>Last name<input name="appt_lname" autocomplete="family-name"></label></div>
+    <div class="row"><label>Phone *<input name="appt_phone" type="tel" autocomplete="tel" required></label><label>Email<input name="appt_email" type="email" autocomplete="email"></label></div>
+    <label>Preferred contact<select name="appt_pref"><option value="Phone">Phone</option><option value="Email">Email</option><option value="Text">Text message</option></select></label>
+   </fieldset>
+   <fieldset><legend>Your vehicle</legend>
+    <div class="row three"><label>Year<select name="appt_year" id="book-year"><option value="">Year</option></select></label><label>Make<input name="appt_make" placeholder="e.g. Ford"></label><label>Model<input name="appt_model" placeholder="e.g. F-150"></label></div>
+   </fieldset>
+   <fieldset><legend>Requested date &amp; time</legend>
+    <div class="row"><label>Preferred date *<input name="appt_date" id="book-date" type="date" required></label><label>Time<select id="book-time"></select></label></div>
+   </fieldset>
+   <fieldset><legend>What’s going on?</legend>
+    <label>Issue or service needed<textarea name="appt_issue" id="book-issue" rows="3" placeholder="Check engine light, oil change, brakes, etc."></textarea></label>
+   </fieldset>
+   <p class="book-error" id="book-error" role="alert" hidden></p>
+   <button class="book-submit" id="book-submit" type="submit">Send appointment request</button>
+   <p class="book-note">Mon–Fri 8–6 · Sat by appointment · After-hours drop-off<br>Rather talk? Call <a href="tel:+16307086586">(630) 708-6586</a></p>
+  </form>
+  <div class="book-done" id="book-done" hidden>
+   <div class="book-kicker">Request received</div>
+   <h2 tabindex="-1" id="book-done-title">Thanks, <span id="book-name"></span></h2>
+   <p>We’ll contact you to confirm your appointment, usually the same business day.</p>
+   <p>Need us sooner? Call <a href="tel:+16307086586">(630) 708-6586</a>.</p>
+   <button class="book-submit" type="button" id="book-done-close">Back to the drive</button>
+  </div>
+ </div>
+</div>
 <noscript><p class="no-js">AutoHouse Automotive · 359 E Potter St, Wood Dale, IL 60191 · Mon–Fri 8–6 · <a href="tel:+16307086586" style="color:inherit">(630) 708-6586</a> · <a href="/schedule.php" style="color:inherit">Request an appointment</a></p></noscript>
 <script>
 'use strict';
@@ -287,7 +356,7 @@ addEventListener('scroll',()=>{
   if(candidate!==null&&Math.abs(scrollY-candidate*pageStep())>2)go(candidate);
  },220);
 },{passive:true});
-addEventListener('keydown',e=>{if(e.target.closest('button,a'))return;if(['ArrowRight','PageDown','ArrowLeft','PageUp','Home','End'].includes(e.key)){e.preventDefault();go(e.key==='Home'?0:e.key==='End'?4:active+(['ArrowRight','PageDown'].includes(e.key)?1:-1))}});
+addEventListener('keydown',e=>{if(e.target.closest('button,a,input,select,textarea'))return;if(['ArrowRight','PageDown','ArrowLeft','PageUp','Home','End'].includes(e.key)){e.preventDefault();go(e.key==='Home'?0:e.key==='End'?4:active+(['ArrowRight','PageDown'].includes(e.key)?1:-1))}});
 
 // GPU ground: each pixel works out its own world position, so the whole plane is one draw call.
 let gl=null,GL=false,gProg,gU={},gTex={};
@@ -739,7 +808,54 @@ document.addEventListener('keydown',e=>{if(!flyOpen)return;
  if(e.key==='Tab'){const f=[...fly.querySelectorAll('button,a[href]')].filter(x=>!x.hidden&&x.offsetParent);const first=f[0],lastEl=f[f.length-1];
   if(e.shiftKey&&document.activeElement===first){e.preventDefault();lastEl.focus()}else if(!e.shiftKey&&document.activeElement===lastEl){e.preventDefault();first.focus()}}
  e.stopImmediatePropagation()},true);
-// Scheduling is a plain link to the site's request form (/schedule.php): the shop runs Shop-Ware, not ROe.
+// Appointment requests open in a modal that posts to /schedule.php (ajax=1 → JSON); the shop runs Shop-Ware,
+// not ROe. Links keep their href, so the full form page still works without JS, in a new tab, or from Google.
+// #book opens the modal on arrival.
+const book=document.getElementById('book'),bookBack=document.getElementById('book-backdrop'),bookForm=document.getElementById('book-form');
+const bookDone=document.getElementById('book-done'),bookErr=document.getElementById('book-error'),bookBtn=document.getElementById('book-submit');
+let bookOpen=false,bookReturn=null;
+(function(){const pad=n=>String(n).padStart(2,'0'),y=document.getElementById('book-year'),t=document.getElementById('book-time'),d=new Date();
+ for(let k=d.getFullYear()+1;k>=1990;k--)y.add(new Option(k,k));
+ for(const h of[8,9,10,11,12,1,2,3,4,5])for(const m of['00','30']){const ap=h>=8&&h<12?'AM':'PM';t.add(new Option(`${h}:${m} ${ap}`,`${h}|${m}|${ap}`))}
+ d.setDate(d.getDate()+1);document.getElementById('book-date').min=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`})();
+function openBook(service){
+ closeFlyout();
+ const issue=document.getElementById('book-issue');if(service&&!issue.value.trim())issue.value=service;
+ bookForm.hidden=false;bookDone.hidden=true;bookErr.hidden=true;
+ bookReturn=document.activeElement;bookOpen=true;document.documentElement.classList.add('fly-locked');
+ book.hidden=false;bookBack.hidden=false;book.querySelector('.book-scroll').scrollTop=0;
+ requestAnimationFrame(()=>{book.classList.add('open');bookBack.classList.add('open')});
+ bookForm.elements.appt_fname.focus({preventScroll:true});
+ document.getElementById('announcement').textContent='Request an appointment'}
+function closeBook(){if(!bookOpen)return;bookOpen=false;book.classList.remove('open');bookBack.classList.remove('open');
+ document.documentElement.classList.remove('fly-locked');
+ setTimeout(()=>{if(!bookOpen){book.hidden=true;bookBack.hidden=true}},reduced?0:300);
+ if(location.hash==='#book')history.replaceState(null,'',location.pathname+location.search);
+ if(bookReturn&&bookReturn.focus)bookReturn.focus({preventScroll:true})}
+function bookError(msg){bookErr.textContent=msg;bookErr.hidden=false;bookErr.scrollIntoView({block:'nearest'})}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="/schedule.php"]');
+ if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+ e.preventDefault();openBook(new URL(a.href).searchParams.get('service'))});
+document.getElementById('book-close').onclick=closeBook;bookBack.onclick=closeBook;document.getElementById('book-done-close').onclick=closeBook;
+bookBack.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+document.addEventListener('keydown',e=>{if(!bookOpen)return;
+ if(e.key==='Escape'){e.preventDefault();closeBook();return}
+ if(e.key==='Tab'){const f=[...book.querySelectorAll('button,a[href],input:not([tabindex="-1"]),select,textarea')].filter(x=>x.offsetParent);const first=f[0],lastEl=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();lastEl.focus()}else if(!e.shiftKey&&document.activeElement===lastEl){e.preventDefault();first.focus()}}
+ e.stopImmediatePropagation()},true);
+bookForm.addEventListener('submit',async e=>{e.preventDefault();bookErr.hidden=true;
+ const fd=new FormData(bookForm),v=k=>String(fd.get(k)||'').trim();
+ if(!v('appt_fname')||!v('appt_phone')||!v('appt_date'))return bookError('Please fill in your first name, phone number and preferred date.');
+ if(new Date(v('appt_date')+'T12:00').getDay()===0)return bookError('We’re closed on Sundays. Please pick another day.');
+ const [h,m,ap]=document.getElementById('book-time').value.split('|');fd.set('appt_hour',h);fd.set('appt_minute',m);fd.set('appt_ampm',ap);fd.set('ajax','1');
+ bookBtn.disabled=true;bookBtn.textContent='Sending…';
+ try{const res=await fetch(BOOKING_URL,{method:'POST',body:fd,headers:{Accept:'application/json'}});const j=await res.json();
+  if(!j.ok)throw new Error(j.error||'');
+  document.getElementById('book-name').textContent=v('appt_fname');bookForm.reset();bookForm.hidden=true;bookDone.hidden=false;
+  document.getElementById('book-done-title').focus({preventScroll:true});document.getElementById('announcement').textContent='Request received';
+ }catch(x){bookError(x.message||'Sorry, your request could not be sent. Please call us at (630) 708-6586.')}
+ finally{bookBtn.disabled=false;bookBtn.textContent='Send appointment request'}});
+if(location.hash==='#book')openBook();
 resize();setActive(0);requestAnimationFrame(frame);
 
 </script>

@@ -71,6 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// The homepage's appointment modal posts with ajax=1 and wants JSON, not the page.
+if (($_POST['ajax'] ?? '') === '1') {
+    header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode(['ok' => $sent, 'error' => $error]);
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
