@@ -524,13 +524,19 @@ const lighten=hex=>{const n=parseInt(hex.slice(1),16),f=c=>Math.min(255,Math.rou
 const wrapZ=v=>((v%640)+640)%640-40;
 function vehicle(v,z){
  if(z<2.5||z>600)return;
- const T=v.truck,w=T?2.5:1.8,L=T?16:4.6,hb=T?4:1,x1=v.x-w/2,x2=v.x+w/2,P=project,far=z+L;
+ const T=v.truck,w=T?2.5:1.8,L=T?16:4.6,hb=T?4:1,x1=v.x-w/2,x2=v.x+w/2,far=z+L;
+ // Flat one-point perspective keeps the face square to the road parallel to the screen, so off-axis
+ // vehicles looked turned toward the viewer. Each vehicle turns about its own centre by its viewing
+ // angle (zero at the vanishing point, growing toward the edges): fronts foreshorten and bodies run
+ // along their lane, the way the eye sees them. It stays in its lane.
+ const ax=v.x,az=z+L/2,yaw=Math.atan2(ax-1.8,az),yc=Math.cos(yaw),ys=Math.sin(yaw);
+ const P=(x,y,zz)=>{const dx=x-ax,dz=zz-az;return project(ax+dx*yc-dz*ys,y,az+dx*ys+dz*yc)};
  const body=T&&v.dir>0?['#e2e2da','#b9b9b1']:v.c;
  ctx.save();ctx.globalAlpha=Math.min(1,(600-z)/140);
  polygon([P(x1-.1,0,z),P(x2+.25,0,z),P(x2+.25,0,far),P(x1-.1,0,far)],'#10161a44');
  // Right side: every vehicle is left of the camera.
  polygon([P(x2,.32,z),P(x2,.32,far),P(x2,hb,far),P(x2,hb,z)],body[1]);
- const R=(u1,u2,y1,y2,col)=>{const q=P(u1,y1,z),t=P(u2,y2,z);ctx.fillStyle=col;ctx.fillRect(q.x,t.y,t.x-q.x,q.y-t.y)};
+ const R=(u1,u2,y1,y2,col)=>polygon([P(u1,y1,z),P(u2,y1,z),P(u2,y2,z),P(u1,y2,z)],col);
  const wheels=()=>{for(const wz of T?[z+1.2,far-3.5,far-1.5]:[z+.9,far-.9]){const a=P(x2,0,wz),b=P(x2,.62,wz);ctx.fillStyle='#121517';ctx.beginPath();ctx.ellipse(a.x,(a.y+b.y)/2,Math.max(.5,a.s*.2),Math.max(.5,(a.y-b.y)/2),0,0,7);ctx.fill()}};
  if(T){
   wheels();R(x1+.12,x1+.42,0,.36,'#121517');R(x2-.42,x2-.12,0,.36,'#121517');R(x1,x2,.32,hb,body[0]);
